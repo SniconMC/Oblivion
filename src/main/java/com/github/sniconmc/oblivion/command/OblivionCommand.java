@@ -11,7 +11,7 @@ import java.util.List;
 public class OblivionCommand extends Command {
 
     public OblivionCommand() {
-        super("reload");
+        super("oblivion");
         setDefaultExecutor((sender, context) -> {
         });
 
@@ -24,7 +24,7 @@ public class OblivionCommand extends Command {
             }
 
             String reload = commandContext.get(reloadArgument);
-            
+
             switch (reload) {
                 case "reload", "r" -> {
                     OblivionManager.reloadOblivions();
