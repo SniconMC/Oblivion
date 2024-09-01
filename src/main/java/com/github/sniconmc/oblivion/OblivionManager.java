@@ -24,6 +24,7 @@ import net.minestom.server.network.packet.server.play.TeamsPacket;
 import net.minestom.server.scoreboard.Team;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +61,7 @@ public class OblivionManager {
 
     public static void spawnOblivions(Player player) {
 
-        List<OblivionHolder> holders = oblivionHolderMap.get(player);
+        List<OblivionHolder> holders = oblivionHolderMap.getOrDefault(player, new ArrayList<>());
 
         for (String fileName : dataFileJSONData.keySet()) {
 
@@ -87,7 +88,7 @@ public class OblivionManager {
                 OblivionNPC npc = new OblivionNPC(fileName, pos, instance, config, skin);
                 npc.makeVisibleTo(player);
 
-                Pos displayPos = pos.add(0, npc.getEyeHeight(), 0);
+                Pos displayPos = pos.add(0, npc.getEyeHeight() + 0.5, 0);
 
                 OblivionHolder holder = new OblivionHolder(fileName, npc , OblivionDisplayUtils.createTextEntities(displayPos, config, player));
 
