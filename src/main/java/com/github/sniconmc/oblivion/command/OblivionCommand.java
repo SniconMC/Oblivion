@@ -26,8 +26,10 @@ public class OblivionCommand extends Command {
             String reload = commandContext.get(reloadArgument);
 
             switch (reload) {
-                case "reload", "r" -> OblivionManager.reloadOblivions();
-                commandSender.sendMessage(TextUtils.convertStringToComponent(List.of("<green>Reloaded Oblivion!</green>")));
+                case "reload", "r" -> {
+                    OblivionManager.reloadOblivions();
+                    commandSender.sendMessage(TextUtils.convertStringToComponent(List.of("<green>Reloaded Oblivion!</green>")));
+                }
             }
 
         }, reloadArgument);
