@@ -16,7 +16,8 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation("net.minestom:minestom-snapshots:65f75bb059") // Minestom
-    implementation("ch.qos.logback:logback-classic:1.5.7") // Logback
+    implementation("ch.qos.logback:logback-classic:1.5.7") // Logback classic
+    implementation("ch.qos.logback:logback-core:1.5.7") // Logback core
     implementation("net.kyori:adventure-text-minimessage:4.17.0") // MiniMessage
     implementation("com.github.SniconMC:Minestom-Utils:0.1.6.1")
 }
