@@ -89,17 +89,15 @@ public class OblivionManager {
 
                 Pos displayPos = pos.add(0, npc.getEyeHeight(), 0);
 
-
-
                 OblivionHolder holder = new OblivionHolder(fileName, npc , OblivionDisplayUtils.createTextEntities(displayPos, config, player));
 
                 holders.add(holder);
             } catch (JsonSyntaxException | JsonIOException e) {
                 // Handle Gson-specific errors
-                OblivionMain.logger.error("Error parsing JSON in: " + fileName);
+                OblivionMain.logger.error("Error parsing JSON in:  {}", fileName);
             } catch (Exception e) {
                 // Handle any other unexpected exceptions
-                OblivionMain.logger.error("Unexpected error in: " + fileName);
+                OblivionMain.logger.error("Unexpected error in: {}, {}", fileName, e.toString());
             }
         }
 
