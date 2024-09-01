@@ -88,7 +88,7 @@ public class OblivionManager {
                 OblivionNPC npc = new OblivionNPC(fileName, pos, instance, config, skin);
                 npc.makeVisibleTo(player);
 
-                Pos displayPos = pos.add(0, npc.getEyeHeight() + 0.5, 0);
+                Pos displayPos = pos.add(0, npc.getEyeHeight() + 0.45, 0);
 
                 OblivionHolder holder = new OblivionHolder(fileName, npc , OblivionDisplayUtils.createTextEntities(displayPos, config, player));
 

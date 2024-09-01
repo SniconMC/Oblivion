@@ -46,7 +46,9 @@ public class OblivionNPC extends EntityCreature {
 
         Team hiddenName = MinecraftServer.getTeamManager().getTeam("hidden_name");
 
+        // Maybe remove setTeam?
         setTeam(hiddenName);
+        hiddenName.addMember(name);
 
         // Add AI group with LookAtPlayerGoal
         addAIGroup(
