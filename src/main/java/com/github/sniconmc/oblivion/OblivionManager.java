@@ -3,17 +3,14 @@ package com.github.sniconmc.oblivion;
 
 import com.github.sniconmc.oblivion.config.OblivionConfig;
 import com.github.sniconmc.oblivion.entity.OblivionNPC;
-import com.github.sniconmc.oblivion.entity.OblivionText;
 import com.github.sniconmc.oblivion.entity.OblivionBody;
 import com.github.sniconmc.oblivion.utils.LoadOblivion;
 import com.github.sniconmc.utils.entity.EntityUtils;
-import com.github.sniconmc.utils.placeholder.PlaceholderReplacer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.Player;
 import net.minestom.server.network.packet.server.play.TeamsPacket;
@@ -88,20 +85,21 @@ public class OblivionManager {
         if (npcs == null || npcs.isEmpty()) return;
 
         for (OblivionNPC npc : npcs) {
+            // Despawn body
             OblivionBody body = npc.getBody();
-
             if (body != null) {
                 // Fetch all current viewers and remove them one by one
                 for (Player viewer : body.getViewers()) {
-                    npc.removeViewer(viewer);  // This will handle despawning the body for each viewer
+                    npc.removeViewer(viewer);  // Ensure despawning body for each viewer
                 }
             }
 
             // Despawn texts for all players viewing this NPC
             for (Player player : npc.getPlayersWithTexts()) {
-                npc.removeViewer(player);  // This will remove the texts for each player
+                npc.removeViewer(player);  // Ensure removing texts for each player
             }
         }
+        npcs.clear(); // Ensure we clear the set after despawning
     }
 
 

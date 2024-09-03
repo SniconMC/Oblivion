@@ -5,14 +5,12 @@ import com.github.sniconmc.oblivion.config.OblivionConfig;
 import com.github.sniconmc.oblivion.config.OblivionSkin;
 import com.github.sniconmc.oblivion.entity.goals.LookAtPlayerGoal;
 import com.github.sniconmc.oblivion.instance.OblivionInstance;
-import com.github.sniconmc.utils.entity.EntityUtils;
 import com.github.sniconmc.utils.placeholder.PlaceholderReplacer;
 import com.github.sniconmc.utils.skin.SkinUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.*;
 import net.minestom.server.entity.ai.EntityAIGroupBuilder;
 import net.minestom.server.entity.metadata.EntityMeta;
@@ -77,12 +75,14 @@ public class OblivionBody extends EntityCreature {
         Instance instance = OblivionInstance.getInstanceMap().get(config.getWorld());
 
         this.text = config.getName();
-        this.skin = SkinUtils.getSkin(player, config.getSkin().getPlayer(), "", config.getSkin().getTexture(), config.getSkin().getSignature());
         this.shouldLookAtPlayers = config.getPosition().shouldLookAtPlayer();
 
         setInstance(instance == null ? player.getInstance() : instance, config.getPosition().getPositionWithPitchAndYaw());
 
         if (isPlayer()){
+            this.skin = null;
+            this.skin = SkinUtils.getSkin(player, config.getSkin().getPlayer(), "", config.getSkin().getTexture(), config.getSkin().getSignature());
+
             editEntityMeta(PlayerMeta.class, meta -> {
                 meta.setCapeEnabled(configSkin.isCape());
                 meta.setJacketEnabled(configSkin.isJacket());
@@ -95,9 +95,6 @@ public class OblivionBody extends EntityCreature {
         }
 
     }
-
-
-
 
     @Override
     public void updateNewViewer(@NotNull Player player) {
