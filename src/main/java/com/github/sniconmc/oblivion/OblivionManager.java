@@ -14,6 +14,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.Player;
 import net.minestom.server.network.packet.server.play.TeamsPacket;
@@ -23,7 +24,7 @@ import java.util.*;
 
 public class OblivionManager {
 
-    private static Set<OblivionNPC> npcs = new HashSet<>();
+    private static Set<OblivionNPC> npcs;
 
     // Load new Gson
     private static Gson gson = new Gson();
@@ -45,6 +46,9 @@ public class OblivionManager {
     public static void reloadOblivions() {
         dataFileJSONData = new LoadOblivion().load(dataFolder);
 
+        despawnOblivions();
+        spawnOblivions();
+
         for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
             removeViewerToAllNpcs(player);
             addViewerToAllNpcs(player);
@@ -53,6 +57,9 @@ public class OblivionManager {
     }
 
     public static void spawnOblivions(){
+
+        Set<OblivionNPC> setOfNPC = new HashSet<>();
+
         for (String fileName : dataFileJSONData.keySet()) {
 
             try {
@@ -69,7 +76,7 @@ public class OblivionManager {
 
                 List<OblivionText> texts = new ArrayList<>();
 
-                npcs.add(new OblivionNPC(npc, texts));
+                setOfNPC.add(new OblivionNPC(npc, texts));
 
             } catch (JsonSyntaxException | JsonIOException e) {
                 // Handle Gson-specific errors
@@ -79,6 +86,16 @@ public class OblivionManager {
                 OblivionMain.logger.error("Unexpected error in: {}, {}", fileName, e.toString());
             }
         }
+        npcs = setOfNPC;
+    }
+
+    public static void despawnOblivions(){
+
+        npcs.forEach(oblivionNPC -> {
+            oblivionNPC.getBody().remove();
+            oblivionNPC.getTexts().forEach(Entity::remove);
+        });
+        npcs.clear();
     }
 
     public static void addViewerToAllNpcs(Player player) {
