@@ -43,6 +43,9 @@ public class OblivionManager {
         dataFileJSONData = new LoadOblivion().load(dataFolder);
 
         despawnOblivions();
+
+        npcs.clear();
+        
         spawnOblivions();
 
         for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
@@ -92,6 +95,7 @@ public class OblivionManager {
                 for (Player viewer : body.getViewers()) {
                     npc.removeViewer(viewer);  // Ensure despawning body for each viewer
                 }
+                body.remove();
             }
 
             // Despawn texts for all players viewing this NPC
