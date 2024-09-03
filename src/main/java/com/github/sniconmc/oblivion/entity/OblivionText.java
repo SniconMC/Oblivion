@@ -14,11 +14,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Map;
 
-public class OblivionDisplayText extends Entity {
+public class OblivionText extends Entity {
 
     private final List<String> text;
 
-    public OblivionDisplayText(@NotNull int rowId, @NotNull Pos position, @NotNull List<String> text) {
+    public OblivionText(@NotNull int rowId, @NotNull Pos position, @NotNull List<String> text) {
         super(EntityType.TEXT_DISPLAY);
         this.position = position.add(0,rowId*0.4,0);
         this.text = text;

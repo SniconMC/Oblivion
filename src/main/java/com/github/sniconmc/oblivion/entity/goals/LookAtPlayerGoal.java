@@ -1,6 +1,6 @@
 package com.github.sniconmc.oblivion.entity.goals;
 
-import com.github.sniconmc.oblivion.entity.OblivionNPC;
+import com.github.sniconmc.oblivion.entity.OblivionBody;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.Player;
@@ -21,7 +21,7 @@ public final class LookAtPlayerGoal extends GoalSelector {
 
     @Override
     public boolean shouldStart() {
-        if (!((OblivionNPC) entityCreature).shouldLookAtPlayers()) {
+        if (!((OblivionBody) entityCreature).shouldLookAtPlayers()) {
             return false;
         }
         target = findTarget();
@@ -35,7 +35,7 @@ public final class LookAtPlayerGoal extends GoalSelector {
 
     @Override
     public void tick(long time) {
-        if (!((OblivionNPC) entityCreature).shouldLookAtPlayers()) {
+        if (!((OblivionBody) entityCreature).shouldLookAtPlayers()) {
             target = null;
             return;
         }
@@ -56,7 +56,7 @@ public final class LookAtPlayerGoal extends GoalSelector {
 
     @Override
     public boolean shouldEnd() {
-        return target == null || !((OblivionNPC) entityCreature).shouldLookAtPlayers();
+        return target == null || !((OblivionBody) entityCreature).shouldLookAtPlayers();
     }
 
     @Override
