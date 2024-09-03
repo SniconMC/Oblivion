@@ -49,15 +49,6 @@ public class OblivionBody extends EntityCreature {
         Team hiddenName = MinecraftServer.getTeamManager().getTeam("hidden_name");
 
         hiddenName.addMember(name);
-
-        OblivionPosition position = new OblivionPosition();
-
-        // Add AI group with LookAtPlayerGoal
-        addAIGroup(
-                new EntityAIGroupBuilder()
-                        .addGoalSelector(new LookAtPlayerGoal(this, 5, position)) // Look at players within 5 blocks
-                        .build()
-        );
     }
 
     public List<List<String>> getText() {
@@ -82,6 +73,13 @@ public class OblivionBody extends EntityCreature {
         this.shouldLookAtPlayers = config.getPosition().shouldLookAtPlayer();
 
         setInstance(instance == null ? player.getInstance() : instance, config.getPosition().getPositionWithPitchAndYaw());
+
+        // Add AI group with LookAtPlayerGoal
+        addAIGroup(
+                new EntityAIGroupBuilder()
+                        .addGoalSelector(new LookAtPlayerGoal(this, 5, config.getPosition())) // Look at players within 5 blocks
+                        .build()
+        );
 
         if (isPlayer()){
             this.skin = null;
