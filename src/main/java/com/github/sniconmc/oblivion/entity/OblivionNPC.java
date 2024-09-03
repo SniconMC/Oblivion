@@ -9,20 +9,14 @@ public class OblivionNPC {
 
     private OblivionBody body;
     private List<OblivionText> texts;
-    private boolean has_text_created;
 
     public OblivionNPC(OblivionBody body, List<OblivionText> texts) {
         this.body = body;
         this.texts = texts;
-        this.has_text_created = false;
     }
 
     private void createTexts() {
-        if(has_text_created) {
-            return;
-        }
 
-        has_text_created = true;
         Pos namePos = body.getPosition().add(0, body.getEyeHeight()+ 0.45, 0);
         int size = body.getText().size();
         for (int i = 0; i < size; i++) {
