@@ -35,8 +35,8 @@ public class OblivionBody extends EntityCreature {
     private List<List<String>> text;
     private boolean shouldLookAtPlayers;
 
-    public OblivionBody(@NotNull String config, String name) {
-        super(EntityType.PLAYER);
+    public OblivionBody(@NotNull String config, String name, EntityType entityType) {
+        super(entityType);
 
         this.name = name;
         this.text = new ArrayList<>();
@@ -71,12 +71,6 @@ public class OblivionBody extends EntityCreature {
     }
 
     public void setData(OblivionConfig config, Player player) {
-
-        try {
-            switchEntityType(EntityUtils.getEntityTypeFromNamespace(config.getEntity_type()));
-        } catch (Exception e) {
-            OblivionMain.logger.error("balle: " + e.getMessage());
-        }
 
         OblivionSkin configSkin = config.getSkin();
 

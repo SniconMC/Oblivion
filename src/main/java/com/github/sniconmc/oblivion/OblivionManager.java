@@ -1,14 +1,20 @@
 package com.github.sniconmc.oblivion;
 
 
+import com.github.sniconmc.oblivion.config.OblivionConfig;
 import com.github.sniconmc.oblivion.entity.OblivionNPC;
 import com.github.sniconmc.oblivion.entity.OblivionText;
 import com.github.sniconmc.oblivion.entity.OblivionBody;
 import com.github.sniconmc.oblivion.utils.LoadOblivion;
+import com.github.sniconmc.utils.entity.EntityUtils;
+import com.github.sniconmc.utils.placeholder.PlaceholderReplacer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.Player;
 import net.minestom.server.network.packet.server.play.TeamsPacket;
 import net.minestom.server.scoreboard.Team;
@@ -45,11 +51,31 @@ public class OblivionManager {
         OblivionMain.logger.debug("Spawning oblivions");
         for (String fileName : dataFileJSONData.keySet()) {
 
-            OblivionBody npc = new OblivionBody(dataFileJSONData.get(fileName), fileName);
+            try {
 
-            List<OblivionText> texts = new ArrayList<>();
+                OblivionConfig config = new Gson().fromJson(dataFileJSONData.get(fileName), OblivionConfig.class);
 
-            npcs.add(new OblivionNPC(npc, texts));
+                EntityType entityType = EntityUtils.getEntityTypeFromNamespace(config.getEntity_type());
+
+                if (entityType == null) {
+                    continue;
+                }
+
+                OblivionBody npc = new OblivionBody(dataFileJSONData.get(fileName), fileName, entityType);
+
+                List<OblivionText> texts = new ArrayList<>();
+
+                npcs.add(new OblivionNPC(npc, texts));
+
+            } catch (JsonSyntaxException | JsonIOException e) {
+                // Handle Gson-specific errors
+                OblivionMain.logger.error("Error parsing JSON in:  {}", fileName);
+            } catch (Exception e) {
+                // Handle any other unexpected exceptions
+                OblivionMain.logger.error("Unexpected error in: {}, {}", fileName, e.toString());
+            }
+
+
         }
 
     }
