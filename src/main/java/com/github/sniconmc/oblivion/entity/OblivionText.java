@@ -39,7 +39,7 @@ public class OblivionText extends Entity {
         Map<Integer, Metadata.Entry<?>> entries = metadata.getEntries();
 
         // spawn entity
-        player.sendPacket(EntityType.registry().spawnType().getSpawnPacket(this));
+        player.sendPacket(this.entityType.registry().spawnType().getSpawnPacket(this));
 
         // Send the SpawnEntityPacket only to this player
         player.sendPacket(new EntityMetaDataPacket(this.getEntityId(), entries));
