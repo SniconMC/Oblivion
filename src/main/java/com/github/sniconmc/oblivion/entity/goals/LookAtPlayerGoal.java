@@ -46,8 +46,8 @@ public final class LookAtPlayerGoal extends GoalSelector {
         if (target == null || entityCreature.getDistanceSquared(target) > range * range ||
                 entityCreature.getInstance() != target.getInstance()) {
             target = null;
-            // Reset the entity's yaw to the original yaw by teleporting it to the same position with the updated yaw
-            entityCreature.teleport(entityCreature.getPosition().withYaw(originalYaw).withPitch(originalPitch));
+            // Reset the entity's yaw to the original yaw and pitch without teleporting
+            resetHeadRotation();
             return;
         }
 
@@ -61,8 +61,12 @@ public final class LookAtPlayerGoal extends GoalSelector {
 
     @Override
     public void end() {
-        // Reset to the original yaw when ending the goal by teleporting it to the same position with the updated yaw
-        entityCreature.teleport(entityCreature.getPosition().withYaw(originalYaw).withPitch(originalPitch));
+        // Reset to the original yaw and pitch without teleporting
+        resetHeadRotation();
+    }
+    private void resetHeadRotation() {
+        // Set the head rotation directly to the original yaw and pitch
+        entityCreature.setView(originalYaw, originalPitch);
     }
 
     public Entity findTarget() {
