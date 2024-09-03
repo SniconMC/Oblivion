@@ -77,6 +77,8 @@ public class OblivionNPC extends EntityCreature {
         } else {
             player.sendPacket(new EntityMetaDataPacket(this.getEntityId(), entries));
         }
+
+        super.updateNewViewer(player);
     }
 
 
