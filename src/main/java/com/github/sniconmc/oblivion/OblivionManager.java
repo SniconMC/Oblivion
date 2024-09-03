@@ -14,7 +14,6 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.Player;
 import net.minestom.server.network.packet.server.play.TeamsPacket;
@@ -93,9 +92,10 @@ public class OblivionManager {
 
         npcs.forEach(oblivionNPC -> {
             oblivionNPC.getBody().remove();
-            oblivionNPC.getTexts().forEach(Entity::remove);
+            oblivionNPC.getTexts().forEach(oblivionText -> {
+
+            });
         });
-        npcs.clear();
     }
 
     public static void addViewerToAllNpcs(Player player) {
