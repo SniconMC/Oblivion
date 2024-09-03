@@ -42,8 +42,6 @@ public class OblivionNPC extends EntityCreature {
             meta.setHasNoGravity(true);
         });
 
-        setInstance(instance, position);
-
         Team hiddenName = MinecraftServer.getTeamManager().getTeam("hidden_name");
 
         // Maybe remove setTeam?
@@ -71,17 +69,17 @@ public class OblivionNPC extends EntityCreature {
             if (skin.textures() != null && skin.signature() != null) {
                 properties.add(new PlayerInfoUpdatePacket.Property("textures", skin.textures(), skin.signature()));
             }
-            // Send the SpawnEntityPacket only to this player
             var entry = new PlayerInfoUpdatePacket.Entry(this.getUuid(), name, properties, false,
                     0, GameMode.SURVIVAL, null, null);
             player.sendPacket(new PlayerInfoUpdatePacket(PlayerInfoUpdatePacket.Action.ADD_PLAYER, entry));
             player.sendPacket(getEntityType().registry().spawnType().getSpawnPacket(this));
             player.sendPacket(setSkinParts(this.config));
+        } else {
+            player.sendPacket(getEntityType().registry().spawnType().getSpawnPacket(this));
+            player.sendPacket(new EntityMetaDataPacket(this.getEntityId(), entries));
         }
-        
-        player.sendPacket(getEntityType().registry().spawnType().getSpawnPacket(this));
-        player.sendPacket(new EntityMetaDataPacket(this.getEntityId(), entries));
     }
+
 
     public EntityMetaDataPacket setSkinParts(OblivionConfig config) {
         byte skinPartsBitmask = buildSkinPartsBitmask(config.getSkin());
@@ -110,6 +108,5 @@ public class OblivionNPC extends EntityCreature {
             player.sendPacket(new PlayerInfoRemovePacket(this.getUuid()));
         }
         player.sendPacket(new DestroyEntitiesPacket(getEntityId()));
-        this.remove();
     }
 }
