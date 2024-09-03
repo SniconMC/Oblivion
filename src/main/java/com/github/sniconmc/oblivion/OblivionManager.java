@@ -45,10 +45,14 @@ public class OblivionManager {
     public static void reloadOblivions() {
         dataFileJSONData = new LoadOblivion().load(dataFolder);
 
+        for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
+            removeViewerToAllNpcs(player);
+            addViewerToAllNpcs(player);
+        }
+
     }
 
     public static void spawnOblivions(){
-        OblivionMain.logger.debug("Spawning oblivions");
         for (String fileName : dataFileJSONData.keySet()) {
 
             try {
@@ -74,10 +78,7 @@ public class OblivionManager {
                 // Handle any other unexpected exceptions
                 OblivionMain.logger.error("Unexpected error in: {}, {}", fileName, e.toString());
             }
-
-
         }
-
     }
 
     public static void addViewerToAllNpcs(Player player) {

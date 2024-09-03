@@ -24,17 +24,17 @@ public class OblivionNPC {
     }
 
     public void addViewer(Player player) {
-        body.updateNewViewer(player);
+        body.addViewer(player);
         createTexts();
 
-        texts.forEach(text -> text.updateNewViewer(player));
+        texts.forEach(text -> text.addViewer(player));
 
     }
 
     public void removeViewer(Player player) {
-        body.updateOldViewer(player);
+        body.removeViewer(player);
 
-        texts.forEach(text -> text.updateOldViewer(player));
+        texts.forEach(text -> text.removeViewer(player));
     }
 
     public OblivionBody getBody() {
