@@ -12,7 +12,7 @@ public class OblivionMain {
     public static void init() {
         OblivionMain.logger.info("Oblivion initialized");
 
-        OblivionManager oblivionManager = new OblivionManager();
+        new OblivionManager();
 
         MinecraftServer.getCommandManager().register(new OblivionCommand());
     }
