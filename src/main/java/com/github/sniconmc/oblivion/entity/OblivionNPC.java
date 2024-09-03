@@ -15,14 +15,14 @@ public class OblivionNPC {
     }
 
     public void addViewer(Player player) {
-        body.addViewer(player);
+        body.updateNewViewer(player);
 
         texts.forEach(text -> text.addViewer(player));
 
     }
 
     public void removeViewer(Player player) {
-        body.removeViewer(player);
+        body.updateOldViewer(player);
 
         texts.forEach(text -> text.removeViewer(player));
     }
