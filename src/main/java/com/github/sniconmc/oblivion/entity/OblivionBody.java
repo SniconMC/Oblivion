@@ -74,9 +74,6 @@ public class OblivionBody extends EntityCreature {
 
         OblivionSkin configSkin = config.getSkin();
 
-        switchEntityType(EntityUtils.getEntityTypeFromNamespace(config.getEntity_type()));
-
-
         Instance instance = OblivionInstance.getInstanceMap().get(config.getWorld());
 
         this.text = config.getName();
@@ -85,15 +82,24 @@ public class OblivionBody extends EntityCreature {
 
         setInstance(instance == null ? player.getInstance() : instance, config.getPosition().getPositionWithPitchAndYaw());
 
-        editEntityMeta(PlayerMeta.class, meta -> {
-            meta.setCapeEnabled(configSkin.isCape());
-            meta.setJacketEnabled(configSkin.isJacket());
-            meta.setLeftSleeveEnabled(configSkin.isLeft_sleeve());
-            meta.setRightSleeveEnabled(configSkin.isRight_sleeve());
-            meta.setLeftLegEnabled(configSkin.isLeft_pants());
-            meta.setRightLegEnabled(configSkin.isRight_pants());
-            meta.setHatEnabled(configSkin.isHat());
-        });
+        if (isPlayer()){
+            editEntityMeta(PlayerMeta.class, meta -> {
+                meta.setCapeEnabled(configSkin.isCape());
+                meta.setJacketEnabled(configSkin.isJacket());
+                meta.setLeftSleeveEnabled(configSkin.isLeft_sleeve());
+                meta.setRightSleeveEnabled(configSkin.isRight_sleeve());
+                meta.setLeftLegEnabled(configSkin.isLeft_pants());
+                meta.setRightLegEnabled(configSkin.isRight_pants());
+                meta.setHatEnabled(configSkin.isHat());
+            });
+        }
+
+        try {
+            switchEntityType(EntityUtils.getEntityTypeFromNamespace(config.getEntity_type()));
+        } catch (Exception e) {
+            OblivionMain.logger.error(String.valueOf(e));
+        }
+
     }
 
 
