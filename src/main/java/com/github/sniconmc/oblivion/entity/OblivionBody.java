@@ -43,7 +43,7 @@ public class OblivionBody extends EntityCreature {
         this.config = config;
         this.shouldLookAtPlayers = true;
 
-        setInstance(null, Pos.ZERO);
+        setInstance(OblivionInstance.getInstanceMap().get("hub"), Pos.ZERO);
 
         editEntityMeta(EntityMeta.class, meta -> {
             meta.setHasNoGravity(true);

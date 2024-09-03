@@ -22,7 +22,7 @@ public class OblivionNPC {
             texts.add(new OblivionText(i, namePos,  body.getText().get((size-1)-i)));
         }
     }
-    
+
     public void addViewer(Player player) {
         body.updateNewViewer(player);
         createTexts();
