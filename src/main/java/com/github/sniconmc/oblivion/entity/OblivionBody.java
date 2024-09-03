@@ -43,8 +43,6 @@ public class OblivionBody extends EntityCreature {
         this.config = config;
         this.shouldLookAtPlayers = true;
 
-        setInstance(OblivionInstance.getInstanceMap().get("hub"), Pos.ZERO);
-
         editEntityMeta(EntityMeta.class, meta -> {
             meta.setHasNoGravity(true);
         });
@@ -104,7 +102,7 @@ public class OblivionBody extends EntityCreature {
     @Override
     public void updateNewViewer(@NotNull Player player) {
 
-        OblivionMain.logger.debug("Updateing View for player {}", player.getUsername());
+        OblivionMain.logger.debug("Updating NPC viewer for player {}", player.getUsername());
         String placeholderReplacedJson = PlaceholderReplacer.replacePlaceholders(player, config);
 
         try {

@@ -33,7 +33,7 @@ public class OblivionText extends Entity {
 
     @Override
     public void updateNewViewer(@NotNull Player player) {
-        OblivionMain.logger.debug("Updating Viewer for player {}", player.getUsername());
+        OblivionMain.logger.debug("Updating TextDisplay viewer for player {}", player.getUsername());
         editEntityMeta(TextDisplayMeta.class, meta -> meta.setText(TextUtils.convertStringToComponent(List.of(PlaceholderReplacer.replacePlaceholders(player, text.toString())))));
 
         Map<Integer, Metadata.Entry<?>> entries = metadata.getEntries();
