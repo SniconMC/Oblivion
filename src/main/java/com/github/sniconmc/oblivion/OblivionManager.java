@@ -55,27 +55,22 @@ public class OblivionManager {
 
     }
 
-    public static void spawnOblivions(){
-
+    public static void spawnOblivions() {
         Set<OblivionNPC> setOfNPC = new HashSet<>();
 
         for (String fileName : dataFileJSONData.keySet()) {
-
             try {
-
                 OblivionConfig config = new Gson().fromJson(dataFileJSONData.get(fileName), OblivionConfig.class);
 
                 EntityType entityType = EntityUtils.getEntityTypeFromNamespace(config.getEntity_type());
-
                 if (entityType == null) {
                     continue;
                 }
 
                 OblivionBody npc = new OblivionBody(dataFileJSONData.get(fileName), fileName, entityType);
 
-                List<OblivionText> texts = new ArrayList<>();
-
-                setOfNPC.add(new OblivionNPC(npc, texts));
+                // Pass only the OblivionBody
+                setOfNPC.add(new OblivionNPC(npc));
 
             } catch (JsonSyntaxException | JsonIOException e) {
                 // Handle Gson-specific errors
@@ -88,15 +83,29 @@ public class OblivionManager {
         npcs = setOfNPC;
     }
 
-    public static void despawnOblivions(){
 
-        npcs.forEach(oblivionNPC -> {
-            oblivionNPC.getBody().remove();
-            oblivionNPC.getTexts().forEach(oblivionText -> {
+    public static void despawnOblivions() {
+        if (npcs == null || npcs.isEmpty()) return;
 
-            });
-        });
+        for (OblivionNPC npc : npcs) {
+            OblivionBody body = npc.getBody();
+
+            if (body != null) {
+                // Fetch all current viewers and remove them one by one
+                for (Player viewer : body.getViewers()) {
+                    npc.removeViewer(viewer);  // This will handle despawning the body for each viewer
+                }
+            }
+
+            // Despawn texts for all players viewing this NPC
+            for (Player player : npc.getPlayersWithTexts()) {
+                npc.removeViewer(player);  // This will remove the texts for each player
+            }
+        }
     }
+
+
+
 
     public static void addViewerToAllNpcs(Player player) {
 
