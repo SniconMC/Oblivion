@@ -17,17 +17,9 @@ import java.util.Map;
 
 public class OblivionDisplayText extends Entity {
 
-    private String uuid;
-    private Integer rowId;
-    private int entityId;
-    private Pos parentPos;
-    private List<String> text;
-
     public OblivionDisplayText(@NotNull int rowId, @NotNull Pos position, @NotNull List<String> text) {
         super(EntityType.TEXT_DISPLAY);
-        this.rowId = rowId;
         this.position = position.add(0,rowId*0.4,0);
-        this.text = text;
 
         editEntityMeta(TextDisplayMeta.class, meta -> {
             meta.setHasNoGravity(true);

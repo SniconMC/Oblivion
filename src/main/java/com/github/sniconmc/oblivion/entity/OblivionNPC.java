@@ -23,7 +23,6 @@ import java.util.Map;
 public class OblivionNPC extends EntityCreature {
 
     private final String name;
-    private final Pos position;
     private final OblivionConfig config;
 
     private final PlayerSkin skin;
