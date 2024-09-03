@@ -40,10 +40,10 @@ public class OblivionBody extends EntityCreature {
 
         this.name = name;
         this.text = new ArrayList<>();
-        this.position = Pos.ZERO;
-        this.instance = null;
         this.config = config;
         this.shouldLookAtPlayers = true;
+
+        setInstance(null, Pos.ZERO);
 
         editEntityMeta(EntityMeta.class, meta -> {
             meta.setHasNoGravity(true);
@@ -81,11 +81,11 @@ public class OblivionBody extends EntityCreature {
 
         Instance instance = OblivionInstance.getInstanceMap().get(config.getWorld());
 
-        this.position = config.getPosition().getPositionWithPitchAndYaw();
         this.text = config.getName();
-        this.instance = instance == null ? player.getInstance() : instance;
         this.skin = SkinUtils.getSkin(player, config.getSkin().getPlayer(), "", config.getSkin().getTexture(), config.getSkin().getSignature());
         this.shouldLookAtPlayers = config.getPosition().shouldLookAtPlayer();
+
+        setInstance(instance == null ? player.getInstance() : instance, config.getPosition().getPositionWithPitchAndYaw());
 
         editEntityMeta(PlayerMeta.class, meta -> {
             meta.setCapeEnabled(configSkin.isCape());

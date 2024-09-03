@@ -1,5 +1,6 @@
 package com.github.sniconmc.oblivion.entity;
 
+import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 
 import java.util.List;
@@ -14,8 +15,17 @@ public class OblivionNPC {
         this.texts = texts;
     }
 
+    private void createTexts() {
+        Pos namePos = body.getPosition().add(0, body.getEyeHeight()+ 0.45, 0);
+        int size = body.getText().size();
+        for (int i = 0; i < size; i++) {
+            texts.add(new OblivionText(i, namePos,  body.getText().get((size-1)-i)));
+        }
+    }
+    
     public void addViewer(Player player) {
         body.updateNewViewer(player);
+        createTexts();
 
         texts.forEach(text -> text.updateNewViewer(player));
 

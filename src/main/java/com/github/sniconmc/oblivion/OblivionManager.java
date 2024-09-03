@@ -47,13 +47,7 @@ public class OblivionManager {
 
             OblivionBody npc = new OblivionBody(dataFileJSONData.get(fileName), fileName);
 
-            Pos namePos = npc.getPosition().add(0, npc.getEyeHeight()+ 0.45, 0);
-
-            List<OblivionText> texts= new ArrayList<>();
-            int size = npc.getText().size();
-            for (int i = 0; i < size; i++) {
-                 texts.add(new OblivionText(i, namePos,  npc.getText().get((size-1)-i)));
-            }
+            List<OblivionText> texts = new ArrayList<>();
 
             npcs.add(new OblivionNPC(npc, texts));
         }
