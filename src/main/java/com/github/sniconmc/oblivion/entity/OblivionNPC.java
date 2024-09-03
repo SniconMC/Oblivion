@@ -41,6 +41,8 @@ public class OblivionNPC extends EntityCreature {
             meta.setHasNoGravity(true);
         });
 
+        setInstance(instance, position);
+
         Team hiddenName = MinecraftServer.getTeamManager().getTeam("hidden_name");
 
         // Maybe remove setTeam?
@@ -71,10 +73,8 @@ public class OblivionNPC extends EntityCreature {
             var entry = new PlayerInfoUpdatePacket.Entry(this.getUuid(), name, properties, false,
                     0, GameMode.SURVIVAL, null, null);
             player.sendPacket(new PlayerInfoUpdatePacket(PlayerInfoUpdatePacket.Action.ADD_PLAYER, entry));
-            player.sendPacket(getEntityType().registry().spawnType().getSpawnPacket(this));
             player.sendPacket(setSkinParts(this.config));
         } else {
-            player.sendPacket(getEntityType().registry().spawnType().getSpawnPacket(this));
             player.sendPacket(new EntityMetaDataPacket(this.getEntityId(), entries));
         }
     }
