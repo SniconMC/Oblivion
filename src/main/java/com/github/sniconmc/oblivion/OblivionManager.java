@@ -55,15 +55,18 @@ public class OblivionManager {
     }
 
     public static void addViewerToAllNpcs(Player player) {
-        npcs.forEach(oblivionNPC -> {
-            oblivionNPC.addViewer(player);
-        });
+
+        for (OblivionNPC npc : npcs) {
+            npc.addViewer(player);
+        }
     }
 
     public static void removeViewerToAllNpcs(Player player) {
-        npcs.forEach(oblivionNPC -> {
-            oblivionNPC.removeViewer(player);
-        });
+
+        for (OblivionNPC npc : npcs) {
+            npc.removeViewer(player);
+        }
+
     }
     public static Set<OblivionNPC> getNpcs(){
         return npcs;
