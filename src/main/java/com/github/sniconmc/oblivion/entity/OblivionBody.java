@@ -2,6 +2,7 @@ package com.github.sniconmc.oblivion.entity;
 
 import com.github.sniconmc.oblivion.OblivionMain;
 import com.github.sniconmc.oblivion.config.OblivionConfig;
+import com.github.sniconmc.oblivion.config.OblivionPosition;
 import com.github.sniconmc.oblivion.config.OblivionSkin;
 import com.github.sniconmc.oblivion.entity.goals.LookAtPlayerGoal;
 import com.github.sniconmc.oblivion.instance.OblivionInstance;
@@ -48,10 +49,13 @@ public class OblivionBody extends EntityCreature {
         Team hiddenName = MinecraftServer.getTeamManager().getTeam("hidden_name");
 
         hiddenName.addMember(name);
+
+        OblivionPosition position = new OblivionPosition();
+
         // Add AI group with LookAtPlayerGoal
         addAIGroup(
                 new EntityAIGroupBuilder()
-                        .addGoalSelector(new LookAtPlayerGoal(this, 5)) // Look at players within 5 blocks
+                        .addGoalSelector(new LookAtPlayerGoal(this, 5, position)) // Look at players within 5 blocks
                         .build()
         );
     }

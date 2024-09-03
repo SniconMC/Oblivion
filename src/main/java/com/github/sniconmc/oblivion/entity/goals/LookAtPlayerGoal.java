@@ -1,6 +1,7 @@
 package com.github.sniconmc.oblivion.entity.goals;
 
 import com.github.sniconmc.oblivion.OblivionMain;
+import com.github.sniconmc.oblivion.config.OblivionPosition;
 import com.github.sniconmc.oblivion.entity.OblivionBody;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityCreature;
@@ -10,14 +11,12 @@ import net.minestom.server.entity.ai.GoalSelector;
 public final class LookAtPlayerGoal extends GoalSelector {
     private Entity target;
     private final double range;  // Range within which the NPC should look at players
-    private final float originalYaw;
-    private final float originalPitch;
+    private final OblivionPosition position;
 
-    public LookAtPlayerGoal(EntityCreature entityCreature, double range) {
+    public LookAtPlayerGoal(EntityCreature entityCreature, double range, OblivionPosition position) {
         super(entityCreature);
         this.range = range;
-        this.originalYaw = entityCreature.getPosition().yaw(); // Capture the original yaw
-        this.originalPitch = entityCreature.getPosition().pitch();
+        this.position = position;
     }
 
     @Override
@@ -67,8 +66,8 @@ public final class LookAtPlayerGoal extends GoalSelector {
     }
     private void resetHeadRotation() {
         // Ensure the head rotation is set correctly without teleporting the entity
-        entityCreature.refreshPosition(entityCreature.getPosition().withView(originalYaw, originalPitch));
-        OblivionMain.logger.info("Resetting Pos to {}", entityCreature.getPosition().withView(originalYaw, originalPitch));
+        entityCreature.refreshPosition(position.getPositionWithPitchAndYaw());
+        OblivionMain.logger.info("Resetting Pos to {}", position.getPositionWithPitchAndYaw());
     }
 
 
