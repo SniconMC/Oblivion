@@ -1,5 +1,6 @@
 package com.github.sniconmc.oblivion.entity.goals;
 
+import com.github.sniconmc.oblivion.OblivionMain;
 import com.github.sniconmc.oblivion.entity.OblivionBody;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityCreature;
@@ -65,9 +66,11 @@ public final class LookAtPlayerGoal extends GoalSelector {
         resetHeadRotation();
     }
     private void resetHeadRotation() {
-        // Set the head rotation directly to the original yaw and pitch
-        entityCreature.setView(originalYaw, originalPitch);
+        // Ensure the head rotation is set correctly without teleporting the entity
+        entityCreature.refreshPosition(entityCreature.getPosition().withView(originalYaw, originalPitch));
+        OblivionMain.logger.info("Resetting Pos to {}", entityCreature.getPosition().withView(originalYaw, originalPitch));
     }
+
 
     public Entity findTarget() {
         // Always find and return the closest player within the specified range

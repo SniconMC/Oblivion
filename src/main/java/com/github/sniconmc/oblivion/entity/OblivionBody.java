@@ -98,8 +98,6 @@ public class OblivionBody extends EntityCreature {
 
     @Override
     public void updateNewViewer(@NotNull Player player) {
-
-        OblivionMain.logger.debug("Updating NPC viewer for player {}", player.getUsername());
         String placeholderReplacedJson = PlaceholderReplacer.replacePlaceholders(player, config);
 
         try {

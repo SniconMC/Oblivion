@@ -45,7 +45,7 @@ public class OblivionManager {
         despawnOblivions();
 
         npcs.clear();
-        
+
         spawnOblivions();
 
         for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
