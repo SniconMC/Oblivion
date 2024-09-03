@@ -67,7 +67,6 @@ public final class LookAtPlayerGoal extends GoalSelector {
     private void resetHeadRotation() {
         // Ensure the head rotation is set correctly without teleporting the entity
         entityCreature.refreshPosition(position.getPositionWithPitchAndYaw());
-        OblivionMain.logger.info("Resetting Pos to {}", position.getPositionWithPitchAndYaw());
     }
 
 
