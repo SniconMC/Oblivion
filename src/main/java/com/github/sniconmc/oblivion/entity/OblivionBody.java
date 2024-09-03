@@ -72,6 +72,12 @@ public class OblivionBody extends EntityCreature {
 
     public void setData(OblivionConfig config, Player player) {
 
+        try {
+            switchEntityType(EntityUtils.getEntityTypeFromNamespace(config.getEntity_type()));
+        } catch (Exception e) {
+            OblivionMain.logger.error("balle: " + e.getMessage());
+        }
+
         OblivionSkin configSkin = config.getSkin();
 
         Instance instance = OblivionInstance.getInstanceMap().get(config.getWorld());
@@ -92,12 +98,6 @@ public class OblivionBody extends EntityCreature {
                 meta.setRightLegEnabled(configSkin.isRight_pants());
                 meta.setHatEnabled(configSkin.isHat());
             });
-        }
-
-        try {
-            switchEntityType(EntityUtils.getEntityTypeFromNamespace(config.getEntity_type()));
-        } catch (Exception e) {
-            OblivionMain.logger.error(String.valueOf(e));
         }
 
     }
