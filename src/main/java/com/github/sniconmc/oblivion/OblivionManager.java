@@ -3,7 +3,6 @@ package com.github.sniconmc.oblivion;
 
 import com.github.sniconmc.oblivion.config.OblivionConfig;
 import com.github.sniconmc.oblivion.entity.OblivionNPC;
-import com.github.sniconmc.oblivion.entity.OblivionBody;
 import com.github.sniconmc.oblivion.utils.LoadOblivion;
 import com.github.sniconmc.utils.entity.EntityUtils;
 import com.google.gson.Gson;
@@ -15,8 +14,12 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.Player;
 import net.minestom.server.network.packet.server.play.TeamsPacket;
 import net.minestom.server.scoreboard.Team;
+
+
 import java.io.File;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class OblivionManager {
 
@@ -42,14 +45,11 @@ public class OblivionManager {
     public static void reloadOblivions() {
         dataFileJSONData = new LoadOblivion().load(dataFolder);
 
-        despawnOblivions();
-
-        npcs.clear();
-
-        spawnOblivions();
+        npcs.forEach(oblivionNPC -> {
+            oblivionNPC.setConfig(dataFileJSONData.get(oblivionNPC.getName()));
+        });
 
         for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
-            removeViewerToAllNpcs(player);
             addViewerToAllNpcs(player);
         }
 
@@ -64,13 +64,16 @@ public class OblivionManager {
 
                 EntityType entityType = EntityUtils.getEntityTypeFromNamespace(config.getEntity_type());
                 if (entityType == null) {
-                    continue;
+                    entityType = EntityType.PLAYER; // default entity type
                 }
 
-                OblivionBody npc = new OblivionBody(dataFileJSONData.get(fileName), fileName, entityType);
+                OblivionNPC npc = new OblivionNPC();
+                npc.setName(fileName);
+                npc.setConfig(dataFileJSONData.get(fileName));
+                npc.setEntityType(entityType);
 
                 // Pass only the OblivionBody
-                setOfNPC.add(new OblivionNPC(npc));
+                setOfNPC.add(npc);
 
             } catch (JsonSyntaxException | JsonIOException e) {
                 // Handle Gson-specific errors
@@ -82,31 +85,6 @@ public class OblivionManager {
         }
         npcs = setOfNPC;
     }
-
-
-    public static void despawnOblivions() {
-        if (npcs == null || npcs.isEmpty()) return;
-
-        for (OblivionNPC npc : npcs) {
-            // Despawn body
-            OblivionBody body = npc.getBody();
-            if (body != null) {
-                // Fetch all current viewers and remove them one by one
-                for (Player viewer : body.getViewers()) {
-                    npc.removeViewer(viewer);  // Ensure despawning body for each viewer
-                }
-                body.remove();
-            }
-
-            // Despawn texts for all players viewing this NPC
-            for (Player player : npc.getPlayersWithTexts()) {
-                npc.removeViewer(player);  // Ensure removing texts for each player
-            }
-        }
-        npcs.clear(); // Ensure we clear the set after despawning
-    }
-
-
 
 
     public static void addViewerToAllNpcs(Player player) {

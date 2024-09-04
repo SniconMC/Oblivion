@@ -6,6 +6,9 @@ public class OblivionData {
     private String page;
 
     public String getFunction() {
+        if (function == null) {
+            return "";
+        }
         return function;
     }
 
@@ -14,6 +17,9 @@ public class OblivionData {
     }
 
     public String getPage() {
+        if (page == null) {
+            return "";
+        }
         return page;
     }
 

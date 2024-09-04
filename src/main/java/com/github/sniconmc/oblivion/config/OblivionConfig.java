@@ -32,6 +32,9 @@ public class OblivionConfig {
     }
 
     public OblivionData getData() {
+        if (data == null) {
+            return new OblivionData();
+        }
         return data;
     }
 

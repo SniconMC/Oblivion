@@ -2,7 +2,6 @@ package com.github.sniconmc.oblivion.entity;
 
 import com.github.sniconmc.oblivion.OblivionMain;
 import com.github.sniconmc.oblivion.config.OblivionConfig;
-import com.github.sniconmc.oblivion.config.OblivionPosition;
 import com.github.sniconmc.oblivion.config.OblivionSkin;
 import com.github.sniconmc.oblivion.entity.goals.LookAtPlayerGoal;
 import com.github.sniconmc.oblivion.instance.OblivionInstance;
@@ -20,7 +19,9 @@ import net.minestom.server.instance.Instance;
 import net.minestom.server.network.packet.server.play.PlayerInfoRemovePacket;
 import net.minestom.server.network.packet.server.play.PlayerInfoUpdatePacket;
 import net.minestom.server.scoreboard.Team;
+import net.minestom.server.tag.Tag;
 import org.jetbrains.annotations.NotNull;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ import java.util.List;
 public class OblivionBody extends EntityCreature {
 
     private final String name;
-    private final String config;
+    private String config;
 
     private PlayerSkin skin;
     private List<List<String>> text;
@@ -72,6 +73,12 @@ public class OblivionBody extends EntityCreature {
         this.text = config.getName();
         this.shouldLookAtPlayers = config.getPosition().shouldLookAtPlayer();
 
+        Tag<String> page = Tag.String("page");
+        Tag<String> function = Tag.String("function");
+
+        this.setTag(page, config.getData().getPage());
+        this.setTag(function, config.getData().getFunction());
+
         setInstance(instance == null ? player.getInstance() : instance, config.getPosition().getPositionWithPitchAndYaw());
 
         // Add AI group with LookAtPlayerGoal
@@ -82,7 +89,6 @@ public class OblivionBody extends EntityCreature {
         );
 
         if (isPlayer()){
-            this.skin = null;
             this.skin = SkinUtils.getSkin(player, config.getSkin().getPlayer(), "", config.getSkin().getTexture(), config.getSkin().getSignature());
 
             editEntityMeta(PlayerMeta.class, meta -> {
@@ -129,7 +135,7 @@ public class OblivionBody extends EntityCreature {
                     0, GameMode.SURVIVAL,
                     null, null
             );
-
+            player.sendPacket(new PlayerInfoRemovePacket(this.getUuid()));
             // send tab list entry
             player.sendPacket(new PlayerInfoUpdatePacket(PlayerInfoUpdatePacket.Action.ADD_PLAYER, entry));
         }
@@ -146,5 +152,9 @@ public class OblivionBody extends EntityCreature {
 
         // delete tab list entry
         player.sendPacket(new PlayerInfoRemovePacket(this.getUuid()));
+    }
+
+    public void setConfig(String config) {
+        this.config = config;
     }
 }

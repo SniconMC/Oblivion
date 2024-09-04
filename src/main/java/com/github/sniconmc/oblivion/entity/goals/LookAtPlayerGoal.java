@@ -1,12 +1,12 @@
 package com.github.sniconmc.oblivion.entity.goals;
 
-import com.github.sniconmc.oblivion.OblivionMain;
 import com.github.sniconmc.oblivion.config.OblivionPosition;
 import com.github.sniconmc.oblivion.entity.OblivionBody;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.Player;
 import net.minestom.server.entity.ai.GoalSelector;
+
 
 public final class LookAtPlayerGoal extends GoalSelector {
     private Entity target;
