@@ -42,7 +42,7 @@ public class OblivionText extends Entity {
 
     @Override
     public void updateNewViewer(@NotNull Player player) {
-        editEntityMeta(TextDisplayMeta.class, meta -> meta.setText(TextUtils.convertStringToComponent(List.of(PlaceholderReplacer.replacePlaceholders(player, text.getFirst())))));
+        editEntityMeta(TextDisplayMeta.class, meta -> meta.setText(TextUtils.convertStringToComponent(PlaceholderReplacer.replacePlaceholders(player, text.getFirst()))));
 
         Map<Integer, Metadata.Entry<?>> entries = metadata.getEntries();
 
@@ -62,7 +62,7 @@ public class OblivionText extends Entity {
 
     @Override
     public void updateOldViewer(@NotNull Player player) {
-        editEntityMeta(TextDisplayMeta.class, meta -> meta.setText(TextUtils.convertStringToComponent(List.of(PlaceholderReplacer.replacePlaceholders(player, text.getFirst())))));
+        editEntityMeta(TextDisplayMeta.class, meta -> meta.setText(TextUtils.convertStringToComponent(PlaceholderReplacer.replacePlaceholders(player, text.getFirst()))));
 
         Map<Integer, Metadata.Entry<?>> entries = metadata.getEntries();
 

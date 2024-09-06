@@ -1,7 +1,6 @@
 package com.github.sniconmc.oblivion.command;
 
 import com.github.sniconmc.oblivion.OblivionManager;
-import com.github.sniconmc.utils.placeholder.PlaceholderManager;
 import com.github.sniconmc.utils.text.TextUtils;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.arguments.ArgumentType;
@@ -30,15 +29,15 @@ public class OblivionCommand extends Command {
             switch (reload) {
                 case "reload", "r" -> {
                     OblivionManager.reloadOblivions();
-                    commandSender.sendMessage(TextUtils.convertStringToComponent(List.of("<green>Reloaded Oblivion!</green>")));
+                    commandSender.sendMessage(TextUtils.convertStringToComponent("<green>Reloaded Oblivion!</green>"));
                 }
                 case "hide" -> {
                     OblivionManager.removeViewerToAllNpcs(player);
-                    commandSender.sendMessage(TextUtils.convertStringToComponent(List.of("<yellow>Oblivions went into hiding!</yellow>")));
+                    commandSender.sendMessage(TextUtils.convertStringToComponent("<yellow>Oblivions went into hiding!</yellow>"));
                 }
                 case "show" -> {
                     OblivionManager.addViewerToAllNpcs(player);
-                    commandSender.sendMessage(TextUtils.convertStringToComponent(List.of("<green>Wild Oblivions appeared!</green>")));
+                    commandSender.sendMessage(TextUtils.convertStringToComponent("<green>Wild Oblivions appeared!</green>"));
                 }
             }
 
