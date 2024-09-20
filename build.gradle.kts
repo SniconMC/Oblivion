@@ -15,7 +15,7 @@ repositories {
 dependencies {
     implementation("net.minestom:minestom-snapshots:65f75bb059") // Minestom
     implementation("net.kyori:adventure-text-minimessage:4.17.0") // MiniMessage
-    implementation("com.github.SniconMC:Utils:0.1.6.4")
+    implementation("com.github.SniconMC:Utils:0.1.7.1")
 
     implementation("org.slf4j:slf4j-api:2.0.15") // SLF4J API
     implementation("ch.qos.logback:logback-classic:1.5.7") // Logback classic
